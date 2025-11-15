@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: app
-        image: my-registry/app:Cloud-Apps-UniyrL:5.1.5
+        image: my-registry/app:Cloud-Apps-UniyrL:5.2.0
