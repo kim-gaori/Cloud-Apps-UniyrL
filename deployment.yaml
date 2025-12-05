@@ -4,7 +4,7 @@ metadata:
   name: service-a
   annotations:
     # 사진 3의 형식(YYYYMMDDHHMMSS) 적용
-    app/create-datetime: "20251203080000" 
+    app/create-datetime: "20251205080000" 
 spec:
   replicas: 1
   selector:
@@ -18,4 +18,4 @@ spec:
       containers:
       - name: app
         # 초기 이미지 버전
-        image: my-registry/app:Cloud-Apps-UniyrL:5.1.55
+        image: my-registry/app:Cloud-Apps-UniyrL:5.1.56
