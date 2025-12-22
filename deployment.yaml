@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: service-a
   annotations:
-    app/create-datetime: "20251220140000" 
+    app/create-datetime: "20251222030000" 
 spec:
   replicas: 1
   selector:
@@ -16,4 +16,4 @@ spec:
     spec:
       containers:
       - name: app
-        image: my-registry/app:Cloud-Apps-UniyrL:5.1.57
+        image: my-registry/app:Cloud-Apps-UniyrL:5.1.58
