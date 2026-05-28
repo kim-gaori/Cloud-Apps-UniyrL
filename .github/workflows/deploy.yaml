@@ -20,10 +20,12 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: Update KubeConfig
-      # 주의: 아래 '클러스터이름' 부분을 실제 EKS 클러스터 이름으로 반드시 변경하세요!
-      run: aws eks update-kubeconfig --name 클러스터이름 --region ap-northeast-2
+      run: aws eks update-kubeconfig --name cloud-app-cluster --region ap-northeast-2
+
+    - name: Apply deployment manifest
+      run: kubectl apply -f deployment.yaml
 
     - name: Deploy to EKS
       run: |
         kubectl rollout restart deployment service-a
-        kubectl rollout restart deployment service-b
+        kubectl rollout status deployment service-a --timeout=120s
