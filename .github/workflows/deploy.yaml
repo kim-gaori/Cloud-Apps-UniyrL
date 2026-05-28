@@ -19,13 +19,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
 
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+
     - name: Update KubeConfig
       run: aws eks update-kubeconfig --name cloud-app-cluster --region ap-northeast-2
 
     - name: Apply deployment manifest
       run: kubectl apply -f deployment.yaml
 
-    - name: Deploy to EKS
+    - name: Rollout restart
       run: |
         kubectl rollout restart deployment service-a
         kubectl rollout status deployment service-a --timeout=120s
