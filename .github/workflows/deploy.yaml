@@ -3,7 +3,7 @@ name: Deploy to EKS
 on:
   push:
     tags:
-      - 'Cloud-Apps-UniyrL:*'
+      - 'Cloud-Apps-UniyrL-*'
 
 jobs:
   deploy:
