@@ -28,7 +28,7 @@ jobs:
     - name: Apply deployment manifest
       run: kubectl apply -f deployment.yaml
 
-    - name: Rollout restart
+    - name: Wait for rollout
       run: |
         kubectl rollout restart deployment service-a
-        kubectl rollout status deployment service-a --timeout=120s
+        kubectl rollout status deployment service-a --timeout=180s

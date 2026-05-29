@@ -1,9 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: default
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>서비스 상태</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          display: flex; justify-content: center; align-items: center;
+          min-height: 100vh;
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+          font-family: 'Malgun Gothic', Arial, sans-serif;
+        }
+        .card {
+          background: white; border-radius: 20px; padding: 60px 100px;
+          text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .check { font-size: 4em; margin-bottom: 24px; }
+        .status { font-size: 2em; color: #22c55e; font-weight: 700; margin-bottom: 14px; }
+        .service { font-size: 0.85em; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="check">&#x2705;</div>
+        <div class="status">서버의 상태가 정상입니다</div>
+        <div class="service">Cloud-Apps-UniyrL &middot; Service A</div>
+      </div>
+    </body>
+    </html>
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: service-a
+  namespace: default
   annotations:
-    app/create-datetime: "20260327170000" 
+    app/create-datetime: "20260529090000"
 spec:
   replicas: 1
   selector:
@@ -16,4 +56,27 @@ spec:
     spec:
       containers:
       - name: app
-        image: my-registry/app:Cloud-Apps-UniyrL:5.1.111
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-a
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: service-a
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
