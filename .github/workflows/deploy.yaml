@@ -26,7 +26,7 @@ jobs:
       run: aws eks update-kubeconfig --name cloud-app-cluster --region ap-northeast-2
 
     - name: Apply deployment manifest
-      run: kubectl apply -f deployment.yaml
+      run: kubectl apply -f k8s/deployment.yaml
 
     - name: Wait for rollout
       run: |
