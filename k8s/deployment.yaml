@@ -36,7 +36,7 @@ data:
         <div class="status">서버의 상태가 정상입니다</div>
         <hr class="divider">
         <div class="meta">Service &nbsp;: service-a</div>
-        <div class="meta">Version &nbsp;: 5.1.113</div>
+        <div class="meta">Version &nbsp;: 5.1.111</div>
       </div>
     </body>
     </html>
@@ -47,8 +47,8 @@ metadata:
   name: service-a
   namespace: default
   annotations:
-    app/create-datetime: "20260529090000"
-    app/version: "5.1.113"
+    app/create-datetime: "20260302160000"
+    app/version: "5.1.111"
 spec:
   replicas: 1
   selector:
