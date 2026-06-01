@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서비스 상태</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
+    }
+    .card {
+      background: #fff; border-radius: 20px;
+      padding: 60px 100px; text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    }
+    .icon   { font-size: 4rem; margin-bottom: 20px; }
+    .status { font-size: 2rem; color: #16a34a; font-weight: 700; margin-bottom: 16px; }
+    .meta   { font-size: 0.85rem; color: #94a3b8; letter-spacing: .5px; margin-top: 6px; }
+    .divider{ border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">&#x2705;</div>
+    <div class="status">서버의 상태가 정상입니다</div>
+    <hr class="divider">
+    <div class="meta">Service &nbsp;:&nbsp; {{ service }}</div>
+    <div class="meta">Version &nbsp;:&nbsp; {{ version }}</div>
+    <div class="meta">Host &nbsp;&nbsp;&nbsp;:&nbsp; {{ hostname }}</div>
+  </div>
+</body>
+</html>
