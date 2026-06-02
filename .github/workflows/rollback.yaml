@@ -1,0 +1,42 @@
+name: Manual Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: '롤백 사유 (예: 배포 오류, 서비스 장애)'
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    name: "Production 롤백"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+
+    - name: Update KubeConfig
+      run: aws eks update-kubeconfig --name cloud-app-cluster --region ap-northeast-2
+
+    - name: Rollback deployment
+      run: |
+        echo "롤백 사유: ${{ github.event.inputs.reason }}"
+        echo "실행자: ${{ github.actor }}"
+        kubectl rollout undo deployment/service-a
+        kubectl rollout status deployment/service-a --timeout=120s
+
+    - name: Record rollback metadata
+      run: |
+        kubectl annotate deployment service-a           app/status="rolled-back"           app/rolled-back-by="${{ github.actor }}"           app/rolled-back-at="$(date -u +%Y%m%dT%H%M%SZ)"           app/rollback-reason="${{ github.event.inputs.reason }}"           --overwrite
+        echo "✅ 롤백 완료"
+
+    - name: Post-rollback status
+      run: kubectl get deployment service-a -o wide
