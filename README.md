@@ -1,6 +1,6 @@
 # Cloud-Apps-UniyrL · Service A
 
-> AWS EKS 기반 서비스 상태 모니터링 애플리케이션
+> AWS EKS 기반 서비스 상태 모니터링 애플리케이션(굿리치 CI/CD Pipe 라인 임의 복사)
 
 ---
 
